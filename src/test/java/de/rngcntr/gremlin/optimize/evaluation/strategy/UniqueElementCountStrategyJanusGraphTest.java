@@ -33,13 +33,13 @@ public class UniqueElementCountStrategyJanusGraphTest extends UniqueElementCount
                 Arguments.of(1, 5, (Function<GraphTraversalSource, GraphTraversal<?,?>>) g ->
                         g.V().has("name", "hercules")
                                 .outE()),
-                Arguments.of(6, 5, (Function<GraphTraversalSource, GraphTraversal<?,?>>) g ->
+                Arguments.of(1, 5, (Function<GraphTraversalSource, GraphTraversal<?,?>>) g ->
                         g.V().has("name", "hercules")
                                 .out()),
-                Arguments.of(4, 3, (Function<GraphTraversalSource, GraphTraversal<?,?>>) g ->
+                Arguments.of(1, 3, (Function<GraphTraversalSource, GraphTraversal<?,?>>) g ->
                         g.V().has("name", "hercules")
                                 .out("battled")),
-                Arguments.of(2, 3, (Function<GraphTraversalSource, GraphTraversal<?,?>>) g ->
+                Arguments.of(1, 3, (Function<GraphTraversalSource, GraphTraversal<?,?>>) g ->
                         g.V().has("name", "hercules")
                                 .outE("battled")
                                 .has("time", P.gt(10))
@@ -50,7 +50,7 @@ public class UniqueElementCountStrategyJanusGraphTest extends UniqueElementCount
                                 .has("time", P.gt(10))
                                 .inV()
                                 .in("battled")),
-                Arguments.of(2, 3, (Function<GraphTraversalSource, GraphTraversal<?,?>>) g ->
+                Arguments.of(1, 3, (Function<GraphTraversalSource, GraphTraversal<?,?>>) g ->
                         g.V().has("name", "hercules")
                                 .match(__.as("a").outE("battled").has("time", P.gt(10)).as("b"))
                                 .select("b")

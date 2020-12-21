@@ -1,4 +1,4 @@
-package de.rngcntr.gremlin.optimize.evaluation;
+package de.rngcntr.gremlin.optimize.evaluation.graph.examplegraph;
 
 import de.rngcntr.gremlin.optimize.statistics.StatisticsProvider;
 import org.apache.tinkerpop.gremlin.structure.Edge;
@@ -53,7 +53,7 @@ public class ExampleGraphFactory {
 
         Vertex[] customers = new Vertex[10_000];
         for (int i = 0; i < customers.length; i++) {
-            if (i % 100 == 0) {
+            if (i % 500 == 0) {
                 customers[i] = addVertex(tx, "customer", "name", "Bob");
             } else {
                 customers[i] = addVertex(tx, "customer", "name", "Alice");
@@ -67,7 +67,7 @@ public class ExampleGraphFactory {
         }
 
         addEdges(stores, countries, 1, "located_in");
-        addEdges(customers, stores, 19, "buys_at");
+        addEdges(customers, stores, 9, "buys_at");
         addEdges(stores, companies, 1, "belongs_to");
 
         tx.commit();

@@ -16,6 +16,8 @@ package de.rngcntr.gremlin.optimize.evaluation.strategy;
 
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multiset;
+import de.rngcntr.gremlin.optimize.evaluation.Main;
+import de.rngcntr.gremlin.optimize.evaluation.graph.Runner;
 import de.rngcntr.gremlin.optimize.evaluation.util.UniqueEdgeCounter;
 import de.rngcntr.gremlin.optimize.evaluation.util.UniqueVertexCounter;
 import org.apache.tinkerpop.gremlin.process.traversal.TraversalStrategies;
@@ -55,7 +57,7 @@ public abstract class UniqueElementCountStrategyTest {
     public void testTraversal(int numVertices, int numEdges, Function<GraphTraversalSource, GraphTraversal<?,?>> t){
         GraphTraversal<?,?> traversal = t.apply(g);
         assertSameResultAfterOptimization(traversal);
-        assertEquals(numEdges, UniqueEdgeCounter.resetCount());
-        assertEquals(numVertices, UniqueVertexCounter.resetCount());
+        assertEquals(numEdges, Runner.accumulate(UniqueEdgeCounter.resetCount()));
+        assertEquals(numVertices, Runner.accumulate(UniqueVertexCounter.resetCount()));
     }
 }

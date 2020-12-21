@@ -54,8 +54,9 @@ public class UniqueElementCountStrategy extends AbstractTraversalStrategy<Traver
 
     @SuppressWarnings("unchecked")
     private void countUniqueElements(VertexStep<?> vertexStep) {
+        insertVertexCountStepAfter(vertexStep.getPreviousStep());
         if (vertexStep.returnsEdge()) {
-            insertEdgeCountStepAfter((VertexStep<Edge>) vertexStep);
+            insertEdgeCountStepAfter(vertexStep);
         }
         if (vertexStep.returnsVertex()) {
             makeVertexStepExplicit((VertexStep<Vertex>) vertexStep);
@@ -65,10 +66,10 @@ public class UniqueElementCountStrategy extends AbstractTraversalStrategy<Traver
     @SuppressWarnings("unchecked")
     private void countUniqueElements(GraphStep<?,?> graphStep) {
         if (graphStep.returnsEdge()) {
-            insertEdgeCountStepAfter((GraphStep<?,Edge>) graphStep);
+            insertEdgeCountStepAfter(graphStep);
         }
         if (graphStep.returnsVertex()) {
-            insertVertexCountStepAfter((GraphStep<?,Vertex>) graphStep);
+            insertVertexCountStepAfter(graphStep);
         }
     }
 
