@@ -1,4 +1,4 @@
-# gremlin-optimizer-evaluation
+# STRIPE Evaluation
 This repository contains simulated statistics for the [gremlin-optimizer](https://github.com/rngcntr/gremlin-optimizer),
 along with a small set of sample queries. These queries are explained in further detail below.
 
