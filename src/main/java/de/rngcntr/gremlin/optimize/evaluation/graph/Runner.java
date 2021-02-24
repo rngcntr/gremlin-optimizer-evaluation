@@ -9,17 +9,22 @@ import de.rngcntr.gremlin.optimize.statistics.StatisticsProvider;
 import de.rngcntr.gremlin.optimize.structure.PatternGraph;
 import org.apache.tinkerpop.gremlin.process.traversal.TraversalStrategies;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
+import org.apache.tinkerpop.gremlin.structure.Graph;
 import org.janusgraph.core.JanusGraph;
 
 import java.io.PrintStream;
 import java.util.*;
 
 public abstract class Runner {
-    private static final int measuredRuns = 100;
+    private static final int measuredRuns = 2;
 
-    protected abstract StatisticsProvider getGraphStatistics();
+    private StatisticsProvider statistics;
 
-    public abstract void run(JanusGraph graph, boolean init);
+    public void initializeStatistics(Graph graph) {
+        statistics = new GeneralStatistics(graph);
+    }
+
+    public abstract void run(Graph graph);
 
     protected abstract PrintStream getOutput();
 
@@ -30,7 +35,8 @@ public abstract class Runner {
         long start = System.nanoTime();
         for (int i = 0; i < measuredRuns; ++i) {
             PatternGraph pg = new PatternGraph(traversal.asAdmin().clone());
-            optimizedTraversal[i] = pg.optimize(getGraphStatistics());
+            optimizedTraversal[i] = pg.optimize(statistics);
+            System.out.print("");
         }
         long stop = System.nanoTime();
         consume(optimizedTraversal);

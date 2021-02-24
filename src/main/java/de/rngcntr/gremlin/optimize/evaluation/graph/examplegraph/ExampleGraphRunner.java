@@ -4,6 +4,7 @@ import de.rngcntr.gremlin.optimize.evaluation.graph.Runner;
 import de.rngcntr.gremlin.optimize.statistics.StatisticsProvider;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__;
+import org.apache.tinkerpop.gremlin.structure.Graph;
 import org.janusgraph.core.JanusGraph;
 
 import java.io.PrintStream;
@@ -15,10 +16,8 @@ public class ExampleGraphRunner extends Runner {
         return System.out;
     }
 
-    public void run(JanusGraph graph, boolean init) {
-        if (init) {
-            ExampleGraphFactory.load(graph);
-        }
+    public void run(Graph graph) {
+        initializeStatistics(graph);
         GraphTraversalSource g = graph.traversal();
 
         /*
@@ -77,10 +76,5 @@ public class ExampleGraphRunner extends Runner {
                 .select("s").out("located_in").hasLabel("country"));
          */
 
-    }
-
-    @Override
-    protected StatisticsProvider getGraphStatistics() {
-        return new ExampleGraphStatistics();
     }
 }

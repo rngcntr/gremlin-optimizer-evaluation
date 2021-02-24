@@ -3,7 +3,9 @@ package de.rngcntr.gremlin.optimize.evaluation.graph.airroutes;
 import de.rngcntr.gremlin.optimize.statistics.StatisticsProvider;
 import org.apache.tinkerpop.gremlin.process.traversal.IO;
 import org.apache.tinkerpop.gremlin.structure.Edge;
+import org.apache.tinkerpop.gremlin.structure.Graph;
 import org.apache.tinkerpop.gremlin.structure.Vertex;
+import org.apache.tinkerpop.gremlin.tinkergraph.structure.TinkerGraph;
 import org.janusgraph.core.Cardinality;
 import org.janusgraph.core.JanusGraph;
 import org.janusgraph.core.PropertyKey;
@@ -19,14 +21,16 @@ import static org.janusgraph.core.Multiplicity.SIMPLE;
 
 public class AirRoutesFactory {
 
-    public static StatisticsProvider graphStatistics = new AirRoutesStatistics();
-
     public static void load(final JanusGraph graph) {
         try {
             makeSchema(graph);
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
+        populateGraph(graph);
+    }
+
+    public static void load(final TinkerGraph graph) {
         populateGraph(graph);
     }
 
@@ -156,8 +160,10 @@ public class AirRoutesFactory {
         mgmt.commit();
     }
 
-    private static void populateGraph(final JanusGraph graph) {
+    private static void populateGraph(final Graph graph) {
         graph.traversal().io("air-routes.graphml").with(IO.reader, IO.graphml).read().iterate();
-        graph.tx().commit();
+        if (graph.features().graph().supportsTransactions()) {
+            graph.tx().commit();
+        }
     }
 }

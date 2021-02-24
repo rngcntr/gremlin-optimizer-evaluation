@@ -18,7 +18,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <junit.jupiter.version>5.6.0</junit.jupiter.version>
         <apache.tinkerpop.version>3.4.8</apache.tinkerpop.version>
-        <gremlin.optimizer.version>0.1.4</gremlin.optimizer.version>
+        <gremlin.optimizer.version>0.1.6-SNAPSHOT</gremlin.optimizer.version>
         <sunfire.version>2.22.1</sunfire.version>
         <janusgraph.version>0.5.2</janusgraph.version>
     </properties>

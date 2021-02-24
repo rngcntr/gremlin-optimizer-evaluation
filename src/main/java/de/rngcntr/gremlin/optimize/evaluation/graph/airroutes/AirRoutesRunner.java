@@ -4,6 +4,7 @@ import de.rngcntr.gremlin.optimize.evaluation.graph.Runner;
 import de.rngcntr.gremlin.optimize.statistics.StatisticsProvider;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__;
+import org.apache.tinkerpop.gremlin.structure.Graph;
 import org.janusgraph.core.JanusGraph;
 
 import java.io.PrintStream;
@@ -14,14 +15,13 @@ public class AirRoutesRunner extends Runner {
         return System.out;
     }
 
-    public void run(JanusGraph graph, boolean init) {
-        if (init) {
-            AirRoutesFactory.load(graph);
-        }
+    public void run(Graph graph) {
+        initializeStatistics(graph);
         GraphTraversalSource g = graph.traversal();
 
 
-        for (int i = 0; i < 10; ++i) {
+        for (int i = 0; i < 3; ++i) {
+            /*
 
             // Q1
             // Countries on one stop routes between DTM and Larnaca
@@ -101,13 +101,23 @@ public class AirRoutesRunner extends Runner {
             optimizeAndEvaluateTraversal("Q5.2", g.V().has("country", "code", "DE")
                     .out("contains")
                     .hasLabel("airport"), false);
+            */
+
+            // Q6
+            // Complete net, depth=1
+
+            evaluateTraversal("Q6.0a", g.V().has("airport", "code", "DUS").out("route").out("route").out("route"), false);
+            evaluateTraversal("Q6.0a", g.V().has("airport", "code", "DUS").out("route").as("a").out("route").out("route").select("a"), false);
+
+            /*
+            optimizeAndEvaluateTraversal("Q6.1", g.V().hasLabel("airport").as("a")
+                    .out("route")
+                    .hasLabel("airport")
+                    .as("b")
+                    .select("a", "b"), false);
+             */
 
             System.out.println();
         }
-    }
-
-    @Override
-    protected StatisticsProvider getGraphStatistics() {
-        return new AirRoutesStatistics();
     }
 }

@@ -11,8 +11,6 @@ import org.janusgraph.core.schema.JanusGraphManagement;
 
 public class ExampleGraphFactory {
 
-    public static StatisticsProvider graphStatistics = new ExampleGraphStatistics();
-
     public static void load(final JanusGraph graph) {
         makeSchema(graph);
         populateGraph(graph);
